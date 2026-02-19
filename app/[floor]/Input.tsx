@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 interface Size {
     x: number,
@@ -10,17 +10,17 @@ interface Size {
 function getSize(floor: number): Size {
     switch (floor) {
         case 1:
-            return {x: 1444, y: 1446};
+            return { x: 1444, y: 1446 };
         case 2:
-            return {x: 1444, y: 1446};
+            return { x: 1444, y: 1446 };
         case 3:
-            return {x: 1444, y: 1446};
+            return { x: 1444, y: 1446 };
         case 4:
-            return {x: 1552, y: 1446};
+            return { x: 1552, y: 1446 };
         case 5:
-            return {x: 1446, y: 1446};
+            return { x: 1446, y: 1446 };
         case 6:
-            return {x: 1446, y: 1276};
+            return { x: 1446, y: 1276 };
         default:
             throw Error("Invalid floor");
     }
@@ -30,7 +30,6 @@ function getSize(floor: number): Size {
 
 export default function Input({ url }: { url: string }) {
     const ref = React.createRef<HTMLImageElement>();
-    const [pos, setPos] = useState<[number, number]>();
 
     useEffect(() => {
         if (!ref.current) return;
@@ -46,7 +45,7 @@ export default function Input({ url }: { url: string }) {
             const offY = ref.current.offsetTop
 
             const size = getSize(parseInt(floor));
-    
+
             const rX = size.x / imgX;
             const rY = size.y / imgY;
 
@@ -61,15 +60,10 @@ export default function Input({ url }: { url: string }) {
             const x = eX * rX - 50;
             const y = eY * rY - 50;
 
-            setPos([eX, eY]);
-
-            // window.location.href = `${floor}X${x}X${y}`;
+            window.location.href = `${floor}X${x}X${y}`;
         }
     }, [ref])
 
-    return <div className="relative">
-        {pos && <img style={{ transform: `translate(${pos[0]}px, ${pos[1]}px)`}} className="w-8 h-8 absolute transition-transform" src="/paw.png" />}
-        <img ref={ref} style={{ width: "auto" }} src={url} /> 
-    </div>
+    return <img ref={ref} style={{ width: "auto" }} src={url} />
 
 }
